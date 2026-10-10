@@ -87,3 +87,44 @@ jobs:
           # If true, the artifact will be archived (zipped) before uploading. If false, the artifact will be uploaded as-is without archiving. When `archive` is `false`, only a single file can be uploaded. The name of the file will be used as the artifact name (ignoring the `name` parameter).
 
           archive: true # optional, default is true
+      
+      - name: Setup /releases & Parse Config
+        id: parse
+        run: |
+          sudo mkdir -p /releases && sudo chown -R $USER:$USER /releases
+          if [ -f "release.ini" ]; then
+            cp release.ini /releases/
+          else
+            echo "Error: file release.ini not found!"
+            exit 1
+          fi
+          
+          python3 - << 'EOF'
+          import configparser, os
+          c = configparser.ConfigParser()
+          c.read('/releases/release.ini')
+          
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"tag={c.get('release', 'tag', fallback='v1.0.0')}\n")
+              f.write(f"title={c.get('release', 'title', fallback='Release')}\n")
+              
+              body = c.get('release', 'body', fallback='')
+              f.write(f"body<<EOF\n{body}\nEOF\n")
+              
+              files = [f"/releases/{x.strip()}" for x in c.get('release', 'files', fallback '').splitlines() if x.strip()]
+              f.write(f"files<<EOF\n{'\n'.join(files)}\nEOF\n")
+          EOF
+
+      - name: Auto Tag
+        run: |
+          git config user.name "github-actions[bot]" && git config user.email "bot@noreply.github.com"
+          git rev-parse "${{ steps.parse.outputs.tag }}" || (git tag "${{ steps.parse.outputs.tag }}" && git push origin "${{ steps.parse.outputs.tag }}")
+
+      - name: Upload ke GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.parse.outputs.tag }}
+          name: ${{ steps.parse.outputs.title }}
+          body: ${{ steps.parse.outputs.body }}
+          files: ${{ steps.parse.outputs.files }}
+          
