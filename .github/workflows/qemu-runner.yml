@@ -43,7 +43,7 @@ jobs:
       - name: Set Installing QEMU i386 Variable
         if: ${{ inputs.inst_qemu_i386 }}
         run: |
-          PKG="$PKG qemu-system-i386"
+          PKG="$PKG qemu-system-x86"
 
       - name: Skipping QEMU i386 Set Variable
         if: ${{ !inputs.inst_qemu_i386 }}
