@@ -52,7 +52,7 @@ jobs:
 
       - name: Installing Packages
         run: |
-          sudo apt install $PKG -y
+          sudo apt install ${PKG} -y
 
       - name: Create /runner-artifact directory
         run: |
@@ -120,7 +120,7 @@ jobs:
           git config user.name "github-actions[bot]" && git config user.email "bot@noreply.github.com"
           git rev-parse "${{ steps.parse.outputs.tag }}" || (git tag "${{ steps.parse.outputs.tag }}" && git push origin "${{ steps.parse.outputs.tag }}")
 
-      - name: Upload ke GitHub Releases
+      - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.parse.outputs.tag }}
