@@ -5,9 +5,13 @@ on:
     inputs:
       inst_qemu_x64:
         type: boolean
-        description: 'Install QEMU x86_64 and i386 (32-bit)'
+        description: 'Install QEMU x86_64'
         default: false
-      
+      inst_qemu_i386:
+        type: boolean
+        description: 'Install QEMU i386'
+        default: true
+        
 jobs:
   debug-runner:
     runs-on: ubuntu-latest
@@ -21,19 +25,34 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           args: --ssh
+    
+      - name: Set PKG variable
+        run: |
+          PKG=qemu-util
 
-      - name: Install QEMU Utility with QEMU x86_64 and i386
+      - name: Set Installing QEMU x86_64 Variable
         if: ${{ inputs.inst_qemu_x64 }}
         run: |
-          sudo apt update
-          sudo apt install qemu-utils qemu-system-x86-64 qemu-system-i386 -y
-      
-      - name: Install QEMU Utility without QEMU x86_64 and i386
+          PKG="$PKG qemu-system-x86_64"
+
+      - name: Skipping QEMU x86_64 Set Variable
         if: ${{ !inputs.inst_qemu_x64 }}
         run: |
-          sudo apt update
-          sudo apt install qemu-utils -y
+          PKG=$PKG
+      
+      - name: Set Installing QEMU i386 Variable
+        if: ${{ inputs.inst_qemu_i386 }}
+        run: |
+          PKG="$PKG qemu-system-i386"
 
+      - name: Skipping QEMU i386 Set Variable
+        if: ${{ !inputs.inst_qemu_i386 }}
+        run: |
+          PKG=$PKG
+
+      - name: Installing Packages
+        run: |
+          sudo apt install $PKG -y
 
       - name: Create /runner-artifact directory
         run: |
@@ -43,10 +62,6 @@ jobs:
       - name: Turning on NBD module
         run: |
           sudo modprobe nbd
-
-      - name: Install Croc
-        run: |
-          curl https://getcroc.com | bash
 
       - name: Display Connection Info
         run: |
