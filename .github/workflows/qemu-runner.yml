@@ -7,10 +7,6 @@ on:
         type: boolean
         description: 'Install QEMU x86_64'
         default: false
-      inst_qemu_i386:
-        type: boolean
-        description: 'Install QEMU i386'
-        default: true
         
 jobs:
   debug-runner:
@@ -25,34 +21,20 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           args: --ssh
-    
-      - name: Set PKG variable
-        run: |
-          export PKG=qemu-util
 
-      - name: Set Installing QEMU x86_64 Variable
+      - name: Installing QEMU for This Architecture
         if: ${{ inputs.inst_qemu_x64 }}
         run: |
-          export PKG="$PKG qemu-system-x86_64"
+          sudo apt install qemu-system-x86
 
-      - name: Skipping QEMU x86_64 Set Variable
+      - name: Skip Installing QEMU
         if: ${{ !inputs.inst_qemu_x64 }}
         run: |
-          export PKG=$PKG
-      
-      - name: Set Installing QEMU i386 Variable
-        if: ${{ inputs.inst_qemu_i386 }}
+          echo "Skipped."
+          
+      - name: Installing QEMU Utility
         run: |
-          export PKG="$PKG qemu-system-x86"
-
-      - name: Skipping QEMU i386 Set Variable
-        if: ${{ !inputs.inst_qemu_i386 }}
-        run: |
-          export PKG=$PKG
-
-      - name: Installing Packages
-        run: |
-          sudo apt install ${PKG} -y
+          sudo apt install qemu-utils -y
 
       - name: Create /runner-artifact directory
         run: |
