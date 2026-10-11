@@ -10,7 +10,7 @@ on:
         
 jobs:
   debug-runner:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout Code
@@ -22,6 +22,10 @@ jobs:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           args: --ssh
 
+      - name: Updating APT
+        run: |
+          sudo apt update
+      
       - name: Installing QEMU for This Architecture
         if: ${{ inputs.inst_qemu_x64 }}
         run: |
