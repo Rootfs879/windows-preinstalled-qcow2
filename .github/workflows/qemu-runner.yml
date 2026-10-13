@@ -7,6 +7,14 @@ on:
         type: boolean
         description: 'Install QEMU x86_64'
         default: false
+      inst_qemu_ppc:
+        type: boolean
+        description: 'Install QEMU PPC (PowerPC)'
+        default: false
+      inst_qemu_arm:
+        type: boolean
+        description: 'Install QEMU ARM'
+        default: false
         
 jobs:
   debug-runner:
@@ -26,13 +34,33 @@ jobs:
         run: |
           sudo apt update
       
-      - name: Installing QEMU for This Architecture
+      - name: Install QEMU x86_64
         if: ${{ inputs.inst_qemu_x64 }}
         run: |
           sudo apt install qemu-system-x86
 
-      - name: Skip Installing QEMU
+      - name: Skip Install QEMU x86_64
         if: ${{ !inputs.inst_qemu_x64 }}
+        run: |
+          echo "Skipped."
+
+      - name: Install QEMU PPC
+        if: ${{ inputs.inst_qemu_ppc }}
+        run: |
+          sudo apt install qemu-system-ppc
+
+      - name: Skip Install QEMU PPC
+        if: ${{ !inputs.inst_qemu_ppc }}
+        run: |
+          echo "Skipped."
+
+      - name: Install QEMU ARM
+        if: ${{ inputs.inst_qemu_arm }}
+        run: |
+          sudo apt install qemu-system-aarch64
+
+      - name: Skip Install QEMU ARM
+        if: ${{ !inputs.inst_qemu_arm }}
         run: |
           echo "Skipped."
           
