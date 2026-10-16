@@ -6,7 +6,7 @@ on:
       inst_qemu_x64:
         type: boolean
         description: 'Install QEMU x86_64'
-        default: false
+        default: true
       inst_qemu_ppc:
         type: boolean
         description: 'Install QEMU PPC (PowerPC)'
@@ -64,6 +64,13 @@ jobs:
           sudo cat <<EOF > /usr/local/bin/autoclean
           sudo apt autoclean
           EOF
+
+          sudo chmod +x /usr/local/bin/update
+          sudo chmod +x /usr/local/bin/inst
+          sudo chmod +x /usr/local/bin/purge
+          sudo chmod +x /usr/local/bin/remove
+          sudo chmod +x /usr/local/bin/clean
+          sudo chmod +x /usr/local/bin/autoclean
 
       - name: Updating APT
         run: |
