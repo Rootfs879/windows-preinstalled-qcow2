@@ -15,6 +15,14 @@ on:
         type: boolean
         description: 'Install QEMU ARM'
         default: false
+      inst_xfce:
+        type: boolean
+        description: 'Install Xubuntu (XFCE) and VNC server, help you to manage VM using Virtual Machine Manager (virt-manager)'
+        default: true
+      inst_vm_man:
+        type: boolean
+        description: 'Install Virtual Machine Manager (virt-manager)'
+        default: true
         
 jobs:
   debug-runner:
@@ -29,6 +37,33 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           args: --ssh
+
+      - name: Create Custom Command
+        run: |
+          sudo cat <<EOF > /usr/local/bin/update
+          sudo apt update
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/inst
+          sudo apt update
+          sudo apt install $1
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/purge
+          sudo apt purge $1
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/remove
+          sudo apt remove $1
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/clean
+          sudo apt clean
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/autoclean
+          sudo apt autoclean
+          EOF
 
       - name: Updating APT
         run: |
@@ -67,6 +102,27 @@ jobs:
       - name: Installing QEMU Utility
         run: |
           sudo apt install qemu-utils -y
+
+      - name: Install Xubuntu (or XFCE) and VNC server
+        if: ${{ inputs.inst_xfce }}
+        run: |
+          sudo apt install xubuntu-desktop -y
+          sudo apt install tightvncserver -y
+
+      - name: Skip Installing desktop and VNC server
+        if: ${{ !inputs.inst_xfce }}
+        run: |
+          echo "Skipped."
+
+      - name: Install Virtual Machine Manager
+        if: ${{ inputs.inst_vm_man }}
+        run: |
+          sudo apt install virt-manager libvirt-daemon -y
+
+      - name: Skip Installing Virtual Machine Manager
+        if: ${{ !inputs.inst_vm_man }}
+        run: |
+          echo "Skipped."
 
       - name: Create /runner-artifact directory
         run: |
