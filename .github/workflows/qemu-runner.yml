@@ -125,6 +125,7 @@ jobs:
         if: ${{ inputs.inst_vm_man }}
         run: |
           sudo apt install virt-manager libvirt-daemon -y
+          sudo systemctl enable --now libvirtd
 
       - name: Skip Installing Virtual Machine Manager
         if: ${{ !inputs.inst_vm_man }}
