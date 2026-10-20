@@ -44,19 +44,6 @@ jobs:
           sudo apt update
           EOF
 
-          sudo cat <<EOF > /usr/local/bin/inst
-          sudo apt update
-          sudo apt install $1
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/purge
-          sudo apt purge $1
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/remove
-          sudo apt remove $1
-          EOF
-
           sudo cat <<EOF > /usr/local/bin/clean
           sudo apt clean
           EOF
@@ -65,12 +52,19 @@ jobs:
           sudo apt autoclean
           EOF
 
-          sudo chmod +x /usr/local/bin/update
-          sudo chmod +x /usr/local/bin/inst
-          sudo chmod +x /usr/local/bin/purge
-          sudo chmod +x /usr/local/bin/remove
-          sudo chmod +x /usr/local/bin/clean
-          sudo chmod +x /usr/local/bin/autoclean
+          sudo cat <<EOF > /usr/local/bin/autorm-w-purge
+          sudo apt autoremove --purge
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/upgrade
+          sudo apt upgrade
+          EOF
+
+          sudo cat <<EOF > /usr/local/bin/full-upgrade
+          sudo apt full-upgrade
+          EOF
+
+          sudo chmod +x /usr/local/bin/*
 
       - name: Updating APT
         run: |
