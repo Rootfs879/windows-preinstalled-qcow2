@@ -21,12 +21,12 @@ on:
         default: true
       inst_vm_man:
         type: boolean
-        description: 'Install Virtual Machine Manager (virt-manager)'
+        description: 'Install Virt-Manager'
         default: true
         
 jobs:
   debug-runner:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
@@ -115,13 +115,13 @@ jobs:
         run: |
           echo "Skipped."
 
-      - name: Install Virtual Machine Manager
+      - name: Install Virt-Manager
         if: ${{ inputs.inst_vm_man }}
         run: |
-          sudo apt install virt-manager libvirt-daemon -y
+          sudo apt install virt-manager libvirt-daemon libvirt-daemon-system -y
           sudo systemctl enable --now libvirtd
 
-      - name: Skip Installing Virtual Machine Manager
+      - name: Skip Installing Virt-Manager
         if: ${{ !inputs.inst_vm_man }}
         run: |
           echo "Skipped."
