@@ -45,5 +45,7 @@ https://github.com/Rootfs879/windows-preinstalled-qcow2/pulls
 - x86 and x86_64 images are supported
 - VirtIO drivers are included for better KVM/libvirt compatibility
 
-## License
-Please review licensing terms before redistribution or commercial use.
+## Images
+These are the images available:
+- Windows XP SP3 (32-bit)
+- Windows Thin PC (32-bit)
