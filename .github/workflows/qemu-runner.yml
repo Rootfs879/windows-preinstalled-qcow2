@@ -29,7 +29,7 @@ on:
         default: true
       add_nt_iso_coll:
         type: boolean
-        description: 'Add Old Windows NT ISO Collection.'
+        description: 'Add Old Windows NT ISO Collection'
         default: false
 
 jobs:
