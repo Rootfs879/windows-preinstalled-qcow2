@@ -27,10 +27,6 @@ on:
         type: boolean
         description: 'Install Virt-Manager'
         default: true
-      add_nt_iso_coll:
-        type: boolean
-        description: 'Add Old Windows NT ISO Collection'
-        default: false
 
 jobs:
   debug-runner:
@@ -141,72 +137,7 @@ jobs:
       - name: Skip Installing Virt-Manager
         if: ${{ !inputs.inst_vm_man }}
         run: |
-          echo "Skipped."
-
-      - name: Download Old Windows NT ISO Collection
-        if: ${{ inputs.add_nt_iso_coll }}
-        run: |
-          sudo apt install p7zip-full -y
-          sudo mkdir /win-nt
-          sudo chown runner:runner /win-nt
-          cd /win-nt
-          # --- START OF WINDOWS NT 3.1 SECTION --- #
-          mkdir -p 3.1/serv 3.1/wkst
-          # --- WINDOWS NT 3.1 SERVER --- #
-          cd 3.1/serv
-          wget "https://dl-alt1.winworldpc.com/Microsoft%20Windows%20NT%203.1%20Advanced%20Server%20(3.10.5098.1)%20(ISO).7z" -O serv.7z
-          7z x serv.7z
-          rm serv.7z
-          # --- WINDOWS NT 3.1 WORKSTATION --- #
-          cd ../wkst
-          wget "https://dl-alt1.winworldpc.com/Microsoft%20Windows%20NT%203.1%20Workstation%20(3.10.511.1)%20(ISO).7z" -O wkst.7z
-          7z x wkst.7z
-          rm wkst.7z
-          # --- END OF WINDOWS NT 3.1 SECTION --- #
-          cd ../..
-           --- START OF WINDOWS NT 3.5 SECTION --- #
-          mkdir -p 3.5
-          cd 3.5
-          mkdir -p serv wkst
-          # --- WINDOWS NT 3.5 SERVER --- #
-          cd serv
-          wget "https://dl-alt1.winworldpc.com/Abandonware%20Operating%20Systems/PC/Microsoft%20Windows/Windows%20NT3/Microsoft%20Windows%20NT%203.5%20Server%20(3.50.800.1).7z" -O serv.7z
-          7z x serv.7z
-          rm serv.7z
-          # --- WINDOWS NT 3.5 WORKSTATION --- #
-          cd ../wkst
-          wget "https://dl-alt1.winworldpc.com/Abandonware%20Operating%20Systems/PC/Microsoft%20Windows/Windows%20NT3/Microsoft%20Windows%20NT%203.5%20Workstation%20(3.50.807).7z" -O wkst.7z
-          7z x wkst.7z
-          rm wkst.7z
-          # --- END OF WINDOWS NT 3.5 SECTION --- #
-          cd ../..
-          # --- START OF WINDOWS NT 3.51 SECTION --- #
-          mkdir -p 3.51
-          cd 3.51
-          mkdir -p vm wkst serv
-          # --- WINDOWS NT 3.51 VM --- #
-          cd vm
-          wget "https://dl-alt1.winworldpc.com/Abandonware%20Operating%20Systems/Virtual%20Machines/Microsoft%20Windows/Microsoft%20Windows%20NT%203.51%20VM.7z" -O vm.7z
-          7z x vm.7z
-          rm vm.7z
-          # --- WINDOWS NT 3.51 WORKSTATION --- #
-          cd ../wkst
-          wget "https://dl-alt1.winworldpc.com/Abandonware%20Operating%20Systems/PC/Microsoft%20Windows/Windows%20NT3/Microsoft%20Windows%20NT%203.51%20Workstation%20(3.51.1057.1).7z" -O wkst.7z
-          7z x wkst.7z
-          rm wkst.7z
-          # --- WINDOWS NT 3.51 SERVER --- #
-          cd ../serv
-          wget "https://dl-alt1.winworldpc.com/Microsoft%20Windows%20NT%203.51%20Server%20(3.51.1057.1)%20(ISO).7z" -O serv.7z
-          7z x serv.7z
-          rm serv.7z
-          # --- END OF WINDOWS NT 3.51 SECTION --- #
-          cd $HOME
-          
-
-      - name: Skip Downloading Old Windows NT ISO Collection
-        if: ${{ !inputs.add_nt_iso_coll }}
-        run: |
-          echo "Skipped."
+          echo "Skipped."          
         
       - name: Create /runner-artifact directory
         run: |
