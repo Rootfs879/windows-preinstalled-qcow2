@@ -27,7 +27,11 @@ on:
         type: boolean
         description: 'Install Virt-Manager'
         default: true
-        
+      add_nt_iso_collection:
+        type: boolean
+        description: 'Add Old Windows NT ISO Collection.'
+        default: false
+
 jobs:
   debug-runner:
     runs-on: ubuntu-latest
