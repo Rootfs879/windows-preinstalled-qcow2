@@ -17,7 +17,11 @@ on:
         default: false
       inst_xfce:
         type: boolean
-        description: 'Install Xubuntu (XFCE) and VNC server, help you to manage VM using Virtual Machine Manager (virt-manager)'
+        description: 'Install XFCE'
+        default: false
+      inst_vnc:
+        type: boolean
+        description: 'Install VNC Server'
         default: true
       inst_vm_man:
         type: boolean
@@ -104,14 +108,23 @@ jobs:
         run: |
           sudo apt install qemu-utils -y
 
-      - name: Install Xubuntu (or XFCE) and VNC server
+      - name: Install XFCE
         if: ${{ inputs.inst_xfce }}
         run: |
-          sudo apt install xubuntu-desktop -y
-          sudo apt install tightvncserver -y
+          sudo apt install xfce4 -y
 
-      - name: Skip Installing desktop and VNC server
+      - name: Skip Installing XFCE
         if: ${{ !inputs.inst_xfce }}
+        run: |
+          echo "Skipped."
+
+      - name: Install VNC Server
+        if: ${{ inputs.inst_vnc }}
+        run: |
+          sudo apt install tightvncserver
+
+      - name: Skip Installing VNC Server
+        if: ${{ !inputs.inst_vnc }}
         run: |
           echo "Skipped."
 
