@@ -27,7 +27,7 @@ on:
         type: boolean
         description: 'Install Virt-Manager'
         default: true
-      add_nt_iso_collection:
+      add_nt_iso_coll:
         type: boolean
         description: 'Add Old Windows NT ISO Collection.'
         default: false
@@ -143,6 +143,18 @@ jobs:
         run: |
           echo "Skipped."
 
+      - name: Download Old Windows NT ISO Collection
+        if: ${{ inputs.add_nt_iso_coll }}
+        run: |
+          sudo mkdir /win-nt
+          sudo chown runner:runner /win-nt
+          cd /win-nt
+          mkdir -p 3.1-adv-serv
+          wget https://dl-alt1.winworldpc.com/Microsoft%20Windows%20NT%203.1%20Advanced%20Server%20(3.10.5098.1)%20(ISO).7z -O 3.1-adv-serv.7z
+          7z x 3.1-adv-serv.7z
+          rm 3.1-adv-serv.7z
+          
+        
       - name: Create /runner-artifact directory
         run: |
           sudo mkdir -p /runner-artifact
