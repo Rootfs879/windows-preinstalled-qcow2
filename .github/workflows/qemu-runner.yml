@@ -42,6 +42,33 @@ jobs:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           args: --ssh
 
+      - name: Cleanup Runner Space Aggressively
+        run: |
+          echo "=== Disk Space Before Cleaning ==="
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /opt/hostedtoolcache
+          sudo docker image prune --all --force
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt-get remove -y --purge \
+            "ghc*" "dotnet*" "llvm*" "clang*" "lldb*" \
+            "php*" "google-chrome-stable" "microsoft-edge-stable" \
+            "firefox" "powershell" "azure-cli" "monodoc-http" \
+            "desktop-base" "gnome*" "x11-common"
+          sudo apt-get autoremove -y --purge
+          sudo apt-get clean
+          sudo rm -rf /var/lib/apt/lists/*
+          sudo rm -rf /tmp/* /var/tmp/*
+
+          echo "=== Disk Space After Cleaning ==="
+          df -h
+
+
+      
       - name: Create Custom Command
         run: |
           sudo cat <<EOF > /usr/local/bin/update
