@@ -1,4 +1,4 @@
-name: [Miscellaneous] Windows SSH
+name: Windows SSH
 on: workflow_dispatch
 
 jobs:
