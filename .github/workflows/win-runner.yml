@@ -1,4 +1,4 @@
-name: Windows Tailscale SSH
+name: Windows Tailscale with OpenSSH
 on: workflow_dispatch
 
 jobs:
@@ -12,13 +12,25 @@ jobs:
         uses: tailscale/github-action@v4
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-          args: --ssh
+
+      - name: Setup Windows OpenSSH Server
+        shell: pwsh
+        run: |
+          Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+
+          Start-Service sshd
+          Set-Service -Name sshd -StartupType Automatic
+          
+          $password = "nopasswd"
+          $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+          Set-LocalUser -Name "runneradmin" -Password $securePassword
+          
+          Write-Host "Tailscale IP for this runner:"
+          tailscale ip -4
+          Write-Host "Username: runneradmin"
+          Write-Host "Password: nopasswd"
 
       - name: Wait for Debugging Session
         shell: pwsh
         run: |
-          Write-Host "Runner connected to Tailscale."
-          Write-Host "This runner Tailscale IP:"
-          tailscale ip -4
-          
           Start-Sleep -Seconds 21600
