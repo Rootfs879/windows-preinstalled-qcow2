@@ -1,0 +1,15 @@
+name: [Miscellaneous] Windows SSH
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Session
+        uses: lexbritvin/ssh-session-action@v1
+        with:
+          use-bore: 'true'
+          use-actor-ssh-keys: 'true'
