@@ -1,4 +1,4 @@
-name: Windows SSH
+name: Windows Tailscale SSH
 on: workflow_dispatch
 
 jobs:
@@ -8,8 +8,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup SSH Session
-        uses: lexbritvin/ssh-session-action@v1
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
         with:
-          use-bore: 'true'
-          use-actor-ssh-keys: 'true'
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          args: --ssh
+
+      - name: Wait for Debugging Session
+        shell: pwsh
+        run: |
+          Write-Host "Runner connected to Tailscale."
+          Write-Host "This runner Tailscale IP:"
+          tailscale ip -4
+          
+          Start-Sleep -Seconds 21600
