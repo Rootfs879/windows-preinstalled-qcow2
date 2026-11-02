@@ -21,14 +21,14 @@ jobs:
           Start-Service sshd
           Set-Service -Name sshd -StartupType Automatic
           
-          $password = "nopasswd"
+          $password = "n0P4sswD!"
           $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
           Set-LocalUser -Name "runneradmin" -Password $securePassword
           
           Write-Host "Tailscale IP for this runner:"
           tailscale ip -4
           Write-Host "Username: runneradmin"
-          Write-Host "Password: nopasswd"
+          Write-Host "Password: n0P4sswD!"
 
       - name: Wait for Debugging Session
         shell: pwsh
