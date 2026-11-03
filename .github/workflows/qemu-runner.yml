@@ -30,7 +30,7 @@ on:
 
 jobs:
   debug-runner:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout Code
@@ -57,7 +57,7 @@ jobs:
           sudo apt-get remove -y --purge \
             "ghc*" "dotnet*" "llvm*" "clang*" "lldb*" \
             "php*" "google-chrome-stable" "microsoft-edge-stable" \
-            "firefox" "powershell" "azure-cli" "monodoc-http" \
+            "firefox" "azure-cli" \
             "desktop-base" "gnome*" "x11-common"
           sudo apt-get autoremove -y --purge
           sudo apt-get clean
