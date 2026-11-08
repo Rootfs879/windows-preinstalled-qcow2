@@ -27,6 +27,9 @@ on:
         type: boolean
         description: 'Install Virt-Manager'
         default: true
+      cl_rs:
+        type: boolean
+        description: 'Cleanup Runner'
 
 jobs:
   debug-runner:
@@ -43,6 +46,7 @@ jobs:
           args: --ssh
 
       - name: Cleanup Runner Space Aggressively
+        if: ${{ inputs.cl_rs }}
         run: |
           echo "=== Disk Space Before Cleaning ==="
           df -h
