@@ -28,7 +28,15 @@ https://github.com/Rootfs879/windows-preinstalled-qcow2/releases
 6. Finish setup and start the VM
 
 ## Releases
-Each release contains a different Windows build/version. Check the release notes before use.
+These are the versions of OS that have entered the Releases section:
+- Windows 95
+- Windows 2000 (and Windows 2000 with Microsoft Office 2000 Premium)
+- Windows XP (Service Pack 3)
+- Windows Fundamental for Legacy PCs (FLP)
+- Windows Server 2008 (Standard Core)
+- Windows Thin PC
+- (Miscellaneous) ReactOS 0.4.16-x86
+- (Miscellaneous) FreeDOS 1.4
 
 ## Issues
 If you find a problem, open an issue here:
