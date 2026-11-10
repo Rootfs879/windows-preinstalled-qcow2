@@ -71,36 +71,6 @@ jobs:
           echo "=== Disk Space After Cleaning ==="
           df -h
 
-
-      
-      - name: Create Custom Command
-        run: |
-          sudo cat <<EOF > /usr/local/bin/update
-          sudo apt update
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/clean
-          sudo apt clean
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/autoclean
-          sudo apt autoclean
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/autorm-w-purge
-          sudo apt autoremove --purge
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/upgrade
-          sudo apt upgrade
-          EOF
-
-          sudo cat <<EOF > /usr/local/bin/full-upgrade
-          sudo apt full-upgrade
-          EOF
-
-          # --- NOT EXECUTABLE --- #
-
       - name: Updating APT
         run: |
           sudo apt update
@@ -110,30 +80,15 @@ jobs:
         run: |
           sudo apt install qemu-system-x86
 
-      - name: Skip Install QEMU x86_64
-        if: ${{ !inputs.inst_qemu_x64 }}
-        run: |
-          echo "Skipped."
-
       - name: Install QEMU PPC
         if: ${{ inputs.inst_qemu_ppc }}
         run: |
           sudo apt install qemu-system-ppc
-
-      - name: Skip Install QEMU PPC
-        if: ${{ !inputs.inst_qemu_ppc }}
-        run: |
-          echo "Skipped."
-
+          
       - name: Install QEMU ARM
         if: ${{ inputs.inst_qemu_arm }}
         run: |
           sudo apt install qemu-system-aarch64
-
-      - name: Skip Install QEMU ARM
-        if: ${{ !inputs.inst_qemu_arm }}
-        run: |
-          echo "Skipped."
           
       - name: Installing QEMU Utility
         run: |
@@ -144,32 +99,17 @@ jobs:
         run: |
           sudo apt install xfce4 -y
 
-      - name: Skip Installing XFCE
-        if: ${{ !inputs.inst_xfce }}
-        run: |
-          echo "Skipped."
-
       - name: Install VNC Server
         if: ${{ inputs.inst_vnc }}
         run: |
           sudo apt install tightvncserver
-
-      - name: Skip Installing VNC Server
-        if: ${{ !inputs.inst_vnc }}
-        run: |
-          echo "Skipped."
 
       - name: Install Virt-Manager
         if: ${{ inputs.inst_vm_man }}
         run: |
           sudo apt install virt-manager libvirt-daemon libvirt-daemon-system -y
           sudo systemctl enable --now libvirtd
-
-      - name: Skip Installing Virt-Manager
-        if: ${{ !inputs.inst_vm_man }}
-        run: |
-          echo "Skipped."          
-        
+          
       - name: Create /runner-artifact directory
         run: |
           sudo mkdir -p /runner-artifact
@@ -194,12 +134,7 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          # Artifact name. If the `archive` input is `false`, the name of the file uploaded will be the artifact name.
-          name: artifact # optional, default is artifact
-          # A file, directory or wildcard pattern that describes what to upload.
+          name: artifact
           path: /runner-artifact/*
-
-          include-hidden-files: false # optional, default is false
-          # If true, the artifact will be archived (zipped) before uploading. If false, the artifact will be uploaded as-is without archiving. When `archive` is `false`, only a single file can be uploaded. The name of the file will be used as the artifact name (ignoring the `name` parameter).
-
-          archive: true # optional, default is true
+          include-hidden-files: false
+          archive: true
