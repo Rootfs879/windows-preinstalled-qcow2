@@ -35,6 +35,7 @@ These are the versions of OS that have entered the Releases section:
 - Windows Fundamental for Legacy PCs (FLP)
 - Windows Server 2008 (Standard Core)
 - Windows Thin PC
+- Windows 7 All Edition (32-bit)
 - (Miscellaneous) ReactOS 0.4.16-x86
 - (Miscellaneous) FreeDOS 1.4
 
