@@ -87,4 +87,4 @@ https://github.com/Rootfs879/windows-preinstalled-qcow2/pulls
 
 ## License
 
-This repository does not currently declare an explicit license file. Please review the individual release files and source materials before using them in other projects or redistributing them.
+This repository does not currently declare an explicit license file. Please review the individual release files and source materials before using them in other projects or redistributing them. The workflow files in `.github/workflows/` are licensed under the MIT License. This license does not apply to release images or third-party materials.
