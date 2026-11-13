@@ -39,11 +39,34 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Connect to Tailnet & Enable SSH
+      - name: Connect to Tailnet
         uses: tailscale/github-action@v2
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-          args: --ssh
+
+      - name: Install and configure OpenSSH
+        env:
+          RUNNER_SSH_PUBLIC_KEY: ${{ vars.RUNNER_SSH_PUBLIC_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$RUNNER_SSH_PUBLIC_KEY"
+
+          sudo apt-get update
+          sudo apt-get install -y openssh-server
+
+          runner_user="$(whoami)"
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$RUNNER_SSH_PUBLIC_KEY" > "$HOME/.ssh/authorized_keys"
+          chmod 600 "$HOME/.ssh/authorized_keys"
+          sudo chown -R "$runner_user:$runner_user" "$HOME/.ssh"
+
+          printf 'PubkeyAuthentication yes\nPasswordAuthentication no\nPermitRootLogin no\nAllowUsers %s\n' \
+            "$runner_user" | sudo tee /etc/ssh/sshd_config.d/99-runner.conf
+          sudo sshd -t
+          sudo systemctl enable --now ssh
+
+          echo "RUNNER_USER=$runner_user" >> "$GITHUB_ENV"
+
 
       - name: Cleanup Runner Space Aggressively
         if: ${{ inputs.cl_rs }}
