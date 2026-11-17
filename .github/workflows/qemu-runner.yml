@@ -67,6 +67,9 @@ jobs:
 
           echo "RUNNER_USER=$runner_user" >> "$GITHUB_ENV"
 
+      - name: Add user runner to KVM group
+        run: |
+          sudo usermod -aG kvm runner
 
       - name: Cleanup Runner Space Aggressively
         if: ${{ inputs.cl_rs }}
