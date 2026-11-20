@@ -31,6 +31,7 @@ The project includes a range of legacy and specialist Windows images, including:
 - Windows 7 (32-bit)
 - ReactOS 0.4.16 (x86)
 - FreeDOS 1.4
+- Windows Embedded 8.1 Industry Pro
 
 ## Download
 
