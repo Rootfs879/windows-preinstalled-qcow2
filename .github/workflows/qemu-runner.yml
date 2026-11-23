@@ -106,9 +106,9 @@ jobs:
         run: |
           sudo apt install qemu-system-x86
 
-      - name: Install guestfs-tools
+      - name: Install Some Tools
         run: |
-          sudo apt install guestfs-tools
+          sudo apt install guestfs-tools genisoimage
 
       - name: Install QEMU PPC
         if: ${{ inputs.inst_qemu_ppc }}
