@@ -32,6 +32,7 @@ The project includes a range of legacy and specialist Windows images, including:
 - ReactOS 0.4.16 (x86)
 - FreeDOS 1.4
 - Windows Embedded 8.1 Industry Pro
+- Windows Whistler Build 2542
 
 ## Download
 
