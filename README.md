@@ -18,31 +18,27 @@
 
 - 💿 **QCOW2 disk format** for modern virtualization workflows
 - 🪟 **Pre-installed Windows releases** across classic, legacy, and specialist editions
-- ⚡ **VirtIO drivers included** for improved KVM and libvirt compatibility (in some images)
+- ⚡ **VirtIO drivers included** for improved KVM and libvirt compatibility
 - 🧩 **Organized by operating system and edition**
 - 🖥️ **Designed for x86 and x86_64 virtual machines**
 
 ## 💿 Available Images
 
-Sorted by operating-system release date, oldest to newest:
-
-| Year | System | Edition or Build |
-| :---: | :--- | :--- |
-| 1996 | Windows NT | 4.0 Service Pack 6a |
-| 1998 | Windows 98 | Whistler Build 2542 |
-| 1999 | Windows | 95 |
-| 1999 | Windows | 2000 (Office 2000 Premium) |
-| 2000 | Windows | 2000 |
-| 2001 | Windows | XP Service Pack 3 |
-| 2004 | Windows | XP ×64 / Server foundation? |
-| 2005 | Windows Server | 2003 |
-| 2006 | Windows | Fundamental for Legacy PCs (FLP) |
-| 2007 | Windows Server | 2008 Standard Core |
-| 2009 | Windows | 7 (32-bit) |
-| 2010 | Windows | Thin PC |
-| 2013 | Windows Embedded | 8.1 Industry Pro |
-| 2018 | ReactOS | 0.4.16 (x86) |
-| 2024 | FreeDOS | 1.4 |
+| System | Image |
+| :--- | :--- |
+| Windows | 95 |
+| Windows | 2000 |
+| Windows | 2000 + Microsoft Office 2000 Premium |
+| Windows | XP Service Pack 3 |
+| Windows | Fundamental for Legacy PCs (FLP) |
+| Windows Server | 2008 Standard Core |
+| Windows | Thin PC |
+| Windows | 7 (32-bit) |
+| ReactOS | 0.4.16 (x86) |
+| FreeDOS | 1.4 |
+| Windows Embedded | 8.1 Industry Pro |
+| Windows | Whistler Build 2542 |
+| Windows NT | 4.0 Service Pack 6a |
 
 > Availability and exact builds may vary by release. Check the [releases page](https://github.com/Rootfs879/windows-preinstalled-qcow2/releases) for the latest downloads.
 
@@ -105,4 +101,4 @@ The workflow files in `.github/workflows/` are licensed under the **MIT License*
 
 **Built for classic software, legacy hardware, and virtualized nostalgia.**
 
-</div>
+</div> 
