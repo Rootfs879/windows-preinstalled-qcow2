@@ -33,6 +33,7 @@ The project includes a range of legacy and specialist Windows images, including:
 - FreeDOS 1.4
 - Windows Embedded 8.1 Industry Pro
 - Windows Whistler Build 2542
+- Windows NT 4.0 (Service Pack 6a)
 
 ## Download
 
