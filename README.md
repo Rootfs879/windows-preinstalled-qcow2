@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🪟 Windows Pre-Installed QCOW2 Images
+# <img src="images/windows.png" width="25"> Windows Pre-Installed QCOW2 Images
 
 **Ready-to-run Windows disk images for QEMU, KVM, libvirt, Proxmox, and virt-manager.**
 
