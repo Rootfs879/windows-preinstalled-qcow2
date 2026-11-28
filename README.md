@@ -18,7 +18,7 @@
 
 - 💿 **QCOW2 disk format** for modern virtualization workflows
 - 🪟 **Pre-installed Windows releases** across classic, legacy, and specialist editions
-- ⚡ **VirtIO drivers included** for improved KVM and libvirt compatibility
+- ⚡ **VirtIO drivers included** for improved KVM and libvirt compatibility (in some images)
 - 🧩 **Organized by operating system and edition**
 - 🖥️ **Designed for x86 and x86_64 virtual machines**
 
